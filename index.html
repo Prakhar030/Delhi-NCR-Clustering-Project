@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Territory Planning</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="style.css?v=20261024a">
+</head>
+<body>
+<div id="picker" style="display:none">
+  <div class="picker-box">
+    <div class="picker-title">Territory Planning</div>
+    <div class="picker-sub">Choose your branch</div>
+    <div id="pickerList" class="picker-list"></div>
+  </div>
+</div>
+<header id="top">
+  <div class="brand">
+    <div class="title" id="brandTitle">Territory Planning</div>
+    <div class="sub" id="subtitle">Loading…</div>
+  </div>
+  <div class="hdr-ctrl">
+    <label class="lbl" id="baseWrap" style="display:none">Recommended baseline
+      <select id="baseSel"></select>
+    </label>
+    <span class="lbl" id="baseFixed" style="display:none"></span>
+    <span id="dirtyFlag" class="dirty" style="display:none">● unsaved changes</span>
+    <button id="btnBranch" title="Go back and choose another branch">Change branch</button>
+    <button id="btnUndo" title="Undo last change">↶ Undo</button>
+    <button id="btnSave" class="primary" title="Save your work">Save</button>
+    <button id="btnExport" class="primary" title="Download the final assignment as Excel">Export Excel</button>
+  </div>
+</header>
+<nav id="tabs">
+  <button data-tab="map">Map &amp; Assignment</button>
+  <button data-tab="terr">Territory Explorer</button>
+  <button data-tab="changes">Changes &amp; Export <span id="chgCount" class="pill"></span></button>
+</nav>
+
+<main>
+  <section id="tab-data" class="tab"></section>
+  <section id="tab-dash" class="tab"></section>
+
+  <section id="tab-map" class="tab">
+    <div id="mapwrap">
+      <div id="map"></div>
+      <div id="mapopts" class="panel-float collapsed">
+        <div class="po-head"><b>Map layers</b><button id="mapoptsToggle" class="mini">▸</button></div>
+        <div class="po-body">
+          <div class="srch"><input id="mapSearch" placeholder="Find cluster ID or GLID"><button id="mapSearchBtn" class="mini">Go</button></div>
+          <label>Colour clusters by <select id="optClusterColor"></select></label>
+          <label><input type="checkbox" data-opt="hull"> Cluster boundaries</label>
+          <label><input type="checkbox" data-opt="cent"> Cluster centroids (click targets)</label>
+          <label><input type="checkbox" data-opt="labels"> Cluster ID labels</label>
+          <label><input type="checkbox" data-opt="focus"> Highlight selected executive</label>
+          <label><input type="checkbox" data-opt="recOut"> Recommended territory outlines (dashed)</label>
+          <label><input type="checkbox" data-opt="finOut"> Final territory outlines</label>
+          <hr>
+          <label><input type="checkbox" data-opt="el"> Eligible sellers</label>
+          <label><input type="checkbox" data-opt="inel"> Ineligible sellers</label>
+          <label><input type="checkbox" data-opt="uncl"> Not-clustered sellers</label>
+          <label>Colour sellers by
+            <select id="optSellerColor">
+              <option value="elig">Eligibility</option>
+              <option value="cur">Current executive (original)</option>
+              <option value="rec">Recommended executive</option>
+              <option value="final">Final executive</option>
+            </select>
+          </label>
+          <div id="legend"></div>
+        </div>
+      </div>
+      <div id="drawbar" class="panel-float">
+        <b>Draw territory</b> <span id="drawcount" class="muted">0 points</span>
+        <label class="inl"><input type="checkbox" id="drawAddChk"> add to current selection</label>
+        <button onclick="drawUndoPoint()" class="mini">Undo point</button>
+        <button onclick="drawFinish()" class="mini primary">Finish</button>
+        <button onclick="drawCancel()" class="mini">Cancel</button>
+      </div>
+      <button id="sideShow" class="panel-float" title="Show the executive / territory panel">◂ Show panel</button>
+    </div>
+    <aside id="side"></aside>
+  </section>
+
+  <section id="tab-terr" class="tab"></section>
+  <section id="tab-changes" class="tab"></section>
+</main>
+
+<div id="modal" class="modal" style="display:none"><div class="modal-box"><button class="modal-x" onclick="closeModal()">✕</button><div id="modal-body"></div></div></div>
+<div id="toasts"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="offline-shim.js?v=20261024a"></script>
+<script src="core.js?v=20261024a"></script>
+<script src="map.js?v=20261024a"></script>
+<script src="views.js?v=20261024a"></script>
+</body>
+</html>
